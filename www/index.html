@@ -45,6 +45,7 @@
             page.querySelector('#title').innerHTML = title;
             page.querySelector('#btnY').innerHTML = question[current].choicey;
             page.querySelector('#btnN').innerHTML = question[current].choicen;
+            page.querySelector('#page_no').innerHTML = question[current].no;
 
             if(current > 0){
                 
@@ -71,7 +72,18 @@
     function returnbutton(){
 
         //1つ前の問題に戻る
-        document.getElementById("navi").popPage({animation:"fade"});
+        document.getElementById("navi").popPage({animation:"fade"}).then(function(page){
+            
+            var pano = document.getElementById('page_no').innerHTML;
+            
+            console.log(pano);
+            
+            if(pano == 1){
+                //戻るボタンを非表示
+                document.getElementById("btn_onereturn").style.visibility="hidden";
+                
+            }
+        })
     }
    
     //回答を選択したとき
