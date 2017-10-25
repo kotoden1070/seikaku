@@ -35,16 +35,31 @@
     //問題ページに問題を表示する
     //init:そのページを開いたとき
     document.addEventListener('init',function(evet){
+        
         var page = event.target;//event.targetどのページが開かれたか
         
         if(page.id == "question-page"){//questionページの時
+
             //jsonのデータをページにセットする
             var title = question[current].title;
             page.querySelector('#title').innerHTML = title;
             page.querySelector('#btnY').innerHTML = question[current].choicey;
             page.querySelector('#btnN').innerHTML = question[current].choicen;
+
+            if(current > 0){
+                
+                //戻るボタンを表示
+                document.getElementById("btn_onereturn").style.visibility="visible";
+                
+            }else{
+                //戻るボタンを非表示
+                document.getElementById("btn_onereturn").style.visibility="hidden";
+                
+            }
         }else if(page.id == "score"){
+            
             $("#btn_return").on("click",function(){//最初に戻るボタン
+            
                 //top.htmlに戻る
                 document.getElementById("navi").resetToPage("top.html",{animation:"fade"});
             })
@@ -52,9 +67,15 @@
         }
     })
     
+    function returnA(){
+        console.log("msg");
+
+        //1つ前の問題に戻る
+        document.getElementById("navi").popPage({animation:"fade"});
+    }
+   
     //回答を選択したとき
     function select(choiceYN){
-        //1つ前の問題番号を保存
         //どちらが選ばれたかをを判断する
         if(choiceYN == 1){
             current = question[current].yesnext;
@@ -64,7 +85,7 @@
         
         //まだ問題があるか
         if(typeof current == "number"){
-
+            
             document.getElementById("navi").pushPage("question.html",{animation:"fade"});
             
         }else{
